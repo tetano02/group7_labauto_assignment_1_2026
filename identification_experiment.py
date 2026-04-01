@@ -42,7 +42,7 @@ t = np.arange(0, Duration + Tc, Tc)  # Ensure inclusion of Duration if possible
 f0=1.0 # frequenza di partenza (NB POSSO CAMBIARLO)
 f1=500.0 # Tc=0.001 Fc=1000Hz, Shannon/Nyquist 500Hz # frequenza di arrivo (NB POSSO CAMBIARLO, ma il massimo è 500)
 A=50.0 # 
-joint_number=0  # array index #(NB POSSO CAMBIARLO, ma deve essere tra 0 e dof-1)
+joint_number=2  # array index #(NB POSSO CAMBIARLO, ma deve essere tra 0 e dof-1)
 chirp_signal = A*chirp(t, f0=f0, f1=f1, t1=Duration, method='logarithmic') # la frequenza varia in modo logaritmica
 
 
