@@ -4,8 +4,12 @@
 % Carico i risultati del test
 
 clc;clear all;close all;
-joint_number=1;
-load(["model_joint"+joint_number])
+
+% Specifiche da inserire
+joint_number=2;
+id_model = "000"; 
+
+load(["../data/models/"+id_model+"/model_joint"+joint_number])
 
 model_name = 'gantry_portal_sea_soft';
 folder_path = fullfile('..', model_name, 'tests');
