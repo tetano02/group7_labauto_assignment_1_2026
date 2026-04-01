@@ -1,9 +1,9 @@
 controller:
   motion_law_parameters:
-    max_velocity: [0.5, 0.5, 0.5]
+    max_velocity: [0.5, 0.5, 0.5] # [giunto1, giunto2, giunto3]
     max_acceleration: [0.1, 0.1, 0.1]
 
-  cascade_controllers:
+  cascade_controllers: # posso anche filtrare, es su github (guardare)
   - name: "joint1"
     inner:
       Kp: 25.0
@@ -32,7 +32,7 @@ controller:
       Ki: 0.0
       Kd: 0.0
 
-model_parameters:
+model_parameters: # parametri dinamici del robot (es: massa, attriti...)
 - 0.0
 - 0.0
 - 0.0

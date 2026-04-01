@@ -2,23 +2,23 @@
 import time
 import yaml
 
-from scipy.io import savemat
+from scipy.io import savemat # salva un file .mat con dentro i dati (es: quanto ho usato gli attuatori, velocità, acce...)
 from datetime import datetime
 
 import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from labauto import MuJoCoMechanicalSystem
-from labauto import TrapezoidalMotionLaw
-from labauto import loadController
+from labauto import MuJoCoMechanicalSystem # simula il sistema
+from labauto import TrapezoidalMotionLaw # implementa la legge a tre tratti
+from labauto import loadController 
 from labauto import loadInstructions
 
 
 model_name = "gantry_portal_sea_soft"  # folder containing model.xml + control_config.yaml + motion program
-program_name = "trajectory"
+program_name = "trajectory" # lista dei movimenti da eseguire del robot (serpentina)
 
 # Load controller parameters and dynamic parameters
-with open(f'{model_name}/control_config.yaml', 'r') as file:
+with open(f'{model_name}/control_config.yaml', 'r') as file: # da control_config.yaml prende le info
     params_yaml = yaml.safe_load(file)
     controller_params = params_yaml['controller']
     dynamic_params = np.array(params_yaml['model_parameters'])
@@ -29,31 +29,31 @@ xml_path = f"{model_name}/model.xml"
 robot = MuJoCoMechanicalSystem(xml_path=xml_path)
 robot.initialize()
 robot.show()
-dof = robot.get_input_number()
+dof = robot.get_input_number() #3
 
 # Set the cycle time (sampling time) for motion law updates
-Tc = robot.get_sampling_period()
+Tc = robot.get_sampling_period() # sampling_time = 1 ms
 
 # Load the tuned controller using parameters from YAML
-decentralized_ctrl=loadController(Tc,controller_params,dynamic_params,model_name)
+decentralized_ctrl=loadController(Tc,controller_params,dynamic_params,model_name) #decentralized perchè ogni link ha il suo controllore in cascata
 decentralized_ctrl.initialize()
-decentralized_ctrl.set_umax(robot.get_umax())
+decentralized_ctrl.set_umax(robot.get_umax()) # set dei limitoi dell'attuatore
 
 
 
 # Initial reference is equal to the initial state of the robot
-measured_output = robot.read_sensor_value()
-q0 = measured_output[:dof]
-Dq0 = measured_output[dof:]
-DDq0 = np.zeros(dof)
+measured_output = robot.read_sensor_value() # il sensore legge 6 outputs (3 posizioni + 3 velocità)
+q0 = measured_output[:dof] # posizioni di partenza 
+Dq0 = measured_output[dof:] # velocità di partenza
+DDq0 = np.zeros(dof) # suppongo di stare fermo, quindi accelerazione iniziale nulla
 initial_reference = np.concatenate((q0, Dq0, DDq0))
 
 # Define the Motion Law
-ml = TrapezoidalMotionLaw(motion_law_params, Tc) # crea legge di moto
+ml = TrapezoidalMotionLaw(motion_law_params, Tc) # crea legge di moto trapeizodale
 ml.set_initial_condition(q0)
 
 # Define a sequence of motion instructions
-instructions = loadInstructions(f'{model_name}/{program_name}.txt')
+instructions = loadInstructions(f'{model_name}/{program_name}.txt') # carica le istruzioni da eseguire, ovvero la serpentina, da trajectory.txt
 
 from labauto import loadGCode
 gcode_instr=loadGCode(f'{model_name}/{program_name}.gcode')
@@ -64,7 +64,7 @@ ml.add_instructions(gcode_instr)
 joint_torque = robot.read_actuator_value()
 feedforward_action = np.zeros(dof)
 
-decentralized_ctrl.starting(initial_reference, measured_output, joint_torque, feedforward_action)
+decentralized_ctrl.starting(initial_reference, measured_output, joint_torque, feedforward_action) # inizializza il controllore
 
 
 # Simulation loop

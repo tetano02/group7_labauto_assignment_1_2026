@@ -36,14 +36,14 @@ dof = robot.get_input_number()
 Tc = robot.get_sampling_period()
 
 # define chirp
-Duration = 30.0 # seconds
+Duration = 30.0 # seconds # facio vibrare la macchina per 30 s (NB POSSO CAMBIARLO)
 t = np.arange(0, Duration + Tc, Tc)  # Ensure inclusion of Duration if possible
 
-f0=1.0
-f1=500.0 # Tc=0.001 Fc=1000Hz, Shannon/Nyquist 500Hz
-A=50.0
-joint_number=0  # array index
-chirp_signal = A*chirp(t, f0=f0, f1=f1, t1=Duration, method='logarithmic')
+f0=1.0 # frequenza di partenza (NB POSSO CAMBIARLO)
+f1=500.0 # Tc=0.001 Fc=1000Hz, Shannon/Nyquist 500Hz # frequenza di arrivo (NB POSSO CAMBIARLO, ma il massimo è 500)
+A=50.0 # 
+joint_number=0  # array index #(NB POSSO CAMBIARLO, ma deve essere tra 0 e dof-1)
+chirp_signal = A*chirp(t, f0=f0, f1=f1, t1=Duration, method='logarithmic') # la frequenza varia in modo logaritmica
 
 
 
