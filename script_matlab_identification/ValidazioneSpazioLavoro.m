@@ -6,7 +6,7 @@ joint_number=1;
 load(["model_joint"+joint_number])
 
 model_name = 'gantry_portal_sea_soft';
-folder_path = fullfile('..', 'labauto_assignment_1_2026', model_name, 'tests');
+folder_path = fullfile('..', model_name, 'tests');
 
 tests=dir(fullfile(folder_path, "wp_validation_chirp_experiment_joint"+joint_number+"*.mat"));
 for itest=1:length(tests)
