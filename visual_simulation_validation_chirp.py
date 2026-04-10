@@ -17,12 +17,29 @@ from labauto import loadController
 # In particolare è utile per vedere se sbatte contro il finecorsa in alcune situazioni e per settare i parametri limite
 
 # Nome del file da testare nuovamente a livello grafico
-TEST_FILE_NAME = "validation_chirp_experiment_joint1_20260401111837.mat"
+TEST_FILE_NAME = "validation_chirp_experiment_joint2_20260401113220.mat"
+
+'''
+TEST UTILI CHE ABBIAMO FATTO 
+
+"validation_chirp_experiment_joint1_20260401111837.mat" => sbatte alla fine
+"validation_chirp_experiment_joint2_20260401113220.mat" => grafico strano (Figure 11 ValidazioneGiunto.m)
+'''
+
+# Se True, stampa nel terminale le caratteristiche principali del chirp
+SHOW_CHIRP_CHARACTERISTICS = True
 
 MODEL_NAME = "gantry_portal_sea_soft"
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_DIR = BASE_DIR / MODEL_NAME
 TESTS_DIR = MODEL_DIR / "tests"
+
+
+def _print_chirp_characteristics(test_data: dict[str, np.ndarray | int | float]) -> None:
+    print("=== Chirp characteristics ===")
+    print(f"f start (f0): {test_data['f0']:.6g} Hz")
+    print(f"f end   (f1): {test_data['f1']:.6g} Hz")
+    print(f"ampiezza (A): {test_data['A']:.6g}")
 
 
 def _load_test_data(file_path: Path) -> dict[str, np.ndarray | int | float]:
@@ -57,6 +74,9 @@ def main() -> None:
     test_data = _load_test_data(test_file)
     chirp_signal = test_data["chirp_signal"]
     joint_number = test_data["joint_number"]
+
+    if SHOW_CHIRP_CHARACTERISTICS:
+        _print_chirp_characteristics(test_data)
 
     with open(MODEL_DIR / "initial_control_config.yaml", "r", encoding="utf-8") as file:
         params_yaml = yaml.safe_load(file)
@@ -119,7 +139,7 @@ def main() -> None:
         time.sleep(max(0.0, Tc - computation_time))
 
     print(f"Replaying file: {test_file.name}")
-    print(f"joint_number={joint_number}, f0={test_data['f0']}, f1={test_data['f1']}, A={test_data['A']}")
+    print(f"joint_number={joint_number}")
 
     robot.close()
 

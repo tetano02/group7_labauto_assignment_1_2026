@@ -2,8 +2,11 @@
 % Carico i risultati del test nei vari working point (wp)
 
 clc;clear all;close all;
-joint_number=1;
-load(["model_joint"+joint_number])
+% Specifiche da inserire
+joint_number=2;
+id_model = "000"; 
+
+load(["../data/models/"+id_model+"/model_joint"+joint_number])
 
 model_name = 'gantry_portal_sea_soft';
 folder_path = fullfile('..', model_name, 'tests');
@@ -58,7 +61,7 @@ for itest=1:length(tests)
     xlabel('Time')
     ylabel('Torque')
     hold on
-                
+    
     figure(2)
     bode_opts = bodeoptions('cstprefs');
     bode_opts.PhaseWrapping = 'on';
@@ -74,6 +77,5 @@ bode_opts = bodeoptions('cstprefs');
 bode_opts.PhaseWrapping = 'on';
 
 bode(modello_continuo,bode_opts)
-
 % carico le varie prove nei diversi spazi di lavoro e le plotto ->
 % l'obiettivo è vedere quanto bene funziona il modello anche in altri punti
