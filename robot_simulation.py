@@ -25,7 +25,10 @@ with open(f'{model_name}/control_config.yaml', 'r') as file: # da control_config
     motion_law_params = controller_params['motion_law_parameters']
 
 # Create simulator for Gantry SEA robot (MuJoCo)
-xml_path = f"{model_name}/model.xml"
+# Use the obstacle-free model for FF identification trajectories.
+xml_file = "model_without_vases.xml" if program_name == "trajectory_FF" else "model.xml"
+xml_path = f"{model_name}/{xml_file}"
+print(f"Using MuJoCo model: {xml_path}")
 robot = MuJoCoMechanicalSystem(xml_path=xml_path)
 robot.initialize()
 robot.show()
@@ -100,6 +103,9 @@ measured_signal = np.array(measured_signal)
 control_action = np.array(control_action)
 reference_signal = np.array(reference_signal)
 link_position = np.array(link_position)
+
+# AGGIUNGI QUESTA RIGA PER STAMPARE IL TEMPO IN CONSOLE
+print(f"--- Tempo totale di simulazione: {t[-1]:.3f} secondi ---")
 
 # Post-processing
 joint_position = measured_signal[:, :dof]

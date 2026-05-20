@@ -1,28 +1,28 @@
 controller:
   motion_law_parameters:
-    max_velocity: [  0.6, 0.6, 0.6 ]
-    max_acceleration: [ 0.4, 0.4, 0.4 ]
+    max_velocity: [  150, 150, 150 ]
+    max_acceleration: [ 45, 45, 50 ]
 
 
   cascade_controllers: # posso anche filtrare, es su github (guardare)
   - name: "joint1"
     inner:
-      Kp: 73.64
-      Ki: 92.05
+      Kp: 276.2685 #274.9
+      Ki: 14.2946
       Kd: 0.0
       filters_on_measure:
         - type: NotchFilter
           natural_frequency: 546.0
-          zeros_damping: 0.2
+          zeros_damping: 0.1
           poles_damping: 0.8
     outer:
-      Kp: 5.0
+      Kp: 27.6
       Ki: 0.0
       Kd: 0.0
   - name: "joint2"
     inner:
-      Kp: 61.25
-      Ki: 92.80
+      Kp: 231.15
+      Ki: 0.025
       Kd: 0.0
       filters_on_measure:
         - type: NotchFilter
@@ -30,62 +30,59 @@ controller:
           zeros_damping: 0.2
           poles_damping: 0.8 
     outer:
-      Kp: 5.0
+      Kp: 23.1
       Ki: 0.0
       Kd: 0.0
   - name: "joint3"
     inner:
-      Kp: 47.58
-      Ki: 118.95
+      Kp: 181.8721 #180.49
+      Ki: 3.8096 #3053.98
       Kd: 0.0
       filters_on_measure:
         - type: NotchFilter
-          natural_frequency: 800.0
-          zeros_damping: 0.2
+          natural_frequency: 783.0
+          zeros_damping: 0.1
           poles_damping: 0.8
     outer:
-      Kp: 15.0
+      Kp: 18.1
       Ki: 0.0
       Kd: 0.0
 
 model_parameters: # parametri dinamici del robot (es: massa, attriti...)
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-- 0.0
-
-
-
+- 0.942584
+- -0.000000
+- 0.000000
+- 0.000000
+- -0.000000
+- -0.000000
+- -0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 1.024973
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.943809
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.000000
+- 0.100895
+- 0.407321
+- 0.166951
+- -0.286947
+- -0.470637
+- -0.589369
 
