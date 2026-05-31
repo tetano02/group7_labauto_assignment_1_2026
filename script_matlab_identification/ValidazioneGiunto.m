@@ -6,7 +6,7 @@
 clc;clear all;close all;
 
 % Specifiche da inserire
-joint_number=1;
+joint_number=3;
 id_model = "000"; 
 
 load(["../data/models/"+id_model+"/model_joint"+joint_number])
