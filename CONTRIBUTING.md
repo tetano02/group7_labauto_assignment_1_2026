@@ -2,6 +2,8 @@
 
 Questo file è utilizzato come guida per il docente, per rendere più semplice capire cosa è stato aggiunto dal gruppo, quali file sono stati modificati rispetto al branch `master` originale e dove cercare le parti principali del lavoro.
 
+**Nota:** [Qui](https://docs.google.com/document/d/1mMn_XgthogLTIwmd0kHkKxPk2QxaSKGnX9Dktu6YbfQ/edit?usp=sharing) è possibile trovare il workflow con i parametri dettagliati.
+
 ## Struttura della repository
 
 ### Modelli identificati
