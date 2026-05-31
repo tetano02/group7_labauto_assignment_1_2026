@@ -1,7 +1,7 @@
 controller:
   motion_law_parameters:
     max_velocity: [  150, 150, 150 ]
-    max_acceleration: [ 45, 45, 50 ]
+    max_acceleration: [ 42.5, 42.5, 50 ]
 
 
   cascade_controllers: # posso anche filtrare, es su github (guardare)
@@ -85,4 +85,3 @@ model_parameters: # parametri dinamici del robot (es: massa, attriti...)
 - -0.286947
 - -0.470637
 - -0.589369
-
